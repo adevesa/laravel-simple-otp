@@ -1,13 +1,11 @@
 <?php
 
-
-
 it('can test', function () {
     expect(true)->toBeTrue();
 });
 
 it('otp can be generated', function () {
-    $identifier = "agustin@devesa.com";
+    $identifier = 'agustin@devesa.com';
     $otp = new \adevesa\SimpleOTP\SimpleOTP();
     $otpModel = $otp->create($identifier);
 
@@ -19,7 +17,7 @@ it('otp can be generated', function () {
 });
 
 it('otp with 10 length can be generated', function () {
-    $identifier = "agustin@devesa.com";
+    $identifier = 'agustin@devesa.com';
     config(['simple-otp.otp_length' => 10]);
     $otp = new \adevesa\SimpleOTP\SimpleOTP();
     $otpModel = $otp->create($identifier);
@@ -32,7 +30,7 @@ it('otp with 10 length can be generated', function () {
 });
 
 it('otp with alphanumeric format can be generated', function () {
-    $identifier = "agustin@devesa.com";
+    $identifier = 'agustin@devesa.com';
     config(['simple-otp.otp_length' => 10, 'simple-otp.otp_format' => 'alpha_numeric']);
     $otp = new \adevesa\SimpleOTP\SimpleOTP();
     $otpModel = $otp->create($identifier);
@@ -45,7 +43,7 @@ it('otp with alphanumeric format can be generated', function () {
 });
 
 it('otp with numeric format can be generated', function () {
-    $identifier = "agustin@devesa.com";
+    $identifier = 'agustin@devesa.com';
     config(['simple-otp.otp_length' => 10, 'simple-otp.otp_format' => 'numeric']);
     $otp = new \adevesa\SimpleOTP\SimpleOTP();
     $otpModel = $otp->create($identifier);
@@ -58,7 +56,7 @@ it('otp with numeric format can be generated', function () {
 });
 
 it('otp with a 10 ttl can be generated', function () {
-    $identifier = "agustin@devesa.com";
+    $identifier = 'agustin@devesa.com';
     config(['simple-otp.otp_expiration_minutes' => 10]);
     $otp = new \adevesa\SimpleOTP\SimpleOTP();
     $otpModel = $otp->create($identifier);
@@ -71,7 +69,7 @@ it('otp with a 10 ttl can be generated', function () {
 });
 
 it('otp can be validated', function () {
-    $identifier = "agustin@devesa.com";
+    $identifier = 'agustin@devesa.com';
     config(['simple-otp.otp_expiration_minutes' => 10]);
     $otp = new \adevesa\SimpleOTP\SimpleOTP();
     $otpModel = $otp->create($identifier);
@@ -87,7 +85,7 @@ it('otp can be validated', function () {
 });
 
 it('otp wrong count 1 attemp can be validated', function () {
-    $identifier = "agustin@devesa.com";
+    $identifier = 'agustin@devesa.com';
     config(['simple-otp.otp_expiration_minutes' => 10]);
     $otp = new \adevesa\SimpleOTP\SimpleOTP();
     $otpModel = $otp->create($identifier);
@@ -96,6 +94,6 @@ it('otp wrong count 1 attemp can be validated', function () {
 
     expect($result)->toBeFalse();
     $otpModel = $otpModel->refresh();
-    expect($otpModel->validated_at)->toBe(NULL);
+    expect($otpModel->validated_at)->toBe(null);
     expect($otpModel->attempts)->toBe(1);
 });

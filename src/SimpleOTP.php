@@ -5,8 +5,11 @@ namespace adevesa\SimpleOTP;
 class SimpleOTP
 {
     protected int $ttl;
+
     protected int $otpLength;
+
     protected int $maxAttempts;
+
     protected bool $alphaNumeric;
 
     public function __construct()
@@ -19,7 +22,7 @@ class SimpleOTP
 
     protected function generateCode(): string
     {
-        $code = "";
+        $code = '';
 
         $characters = $this->format === 'alpha_numeric' ? '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ' : '0123456789';
         $charactersLength = strlen($characters);
@@ -33,7 +36,7 @@ class SimpleOTP
     public function create(string $identifier): Models\SimpleOTP
     {
         $lastOtp = $this->getLastOtp($identifier);
-        if($lastOtp) {
+        if ($lastOtp) {
             return $lastOtp;
         }
 
@@ -58,28 +61,28 @@ class SimpleOTP
     {
         $otpModel = $this->getLastOtp($identifier);
 
-        if (!$otpModel) {
+        if (! $otpModel) {
             return false;
         }
 
-        if($otpModel->code !== $code) {
+        if ($otpModel->code !== $code) {
             $otpModel->attempts++;
             $otpModel->save();
+
             return false;
         }
 
-        if($otpModel->attempts >= $this->maxAttempts) {
+        if ($otpModel->attempts >= $this->maxAttempts) {
             return false;
         }
 
-        if($otpModel->expires_at < now()) {
+        if ($otpModel->expires_at < now()) {
             return false;
         }
-
-
 
         $otpModel->validated_at = now();
         $otpModel->save();
+
         return true;
     }
 }

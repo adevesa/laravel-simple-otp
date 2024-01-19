@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class SimpleOTP extends Model
 {
     protected $table = 'simple_otps';
+
     use HasFactory;
+
     protected $fillable = [
         'identity',
         'code',
@@ -22,6 +24,7 @@ class SimpleOTP extends Model
         $this->identity = $identifier;
         $this->code = $code;
         $this->attempts = 0;
+
         return $this;
     }
 

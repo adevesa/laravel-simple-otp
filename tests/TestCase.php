@@ -2,9 +2,9 @@
 
 namespace adevesa\SimpleOTP\Tests;
 
+use adevesa\SimpleOTP\SimpleOTPServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use adevesa\SimpleOTP\SimpleOTPServiceProvider;
 
 class TestCase extends Orchestra
 {

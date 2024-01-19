@@ -20,4 +20,3 @@ class SimpleOTPFactory extends Factory
         ];
     }
 }
-
