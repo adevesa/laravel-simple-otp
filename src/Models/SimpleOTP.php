@@ -19,9 +19,13 @@ class SimpleOTP extends Model
         'expires_at',
         'attempts',
     ];
+
     private string $identity;
+
     private string $code;
+
     private int $attempts;
+
     private Carbon $expires_at;
 
     public function init(string $identifier, string $code): self

@@ -14,7 +14,9 @@ class SimpleOTP
     protected int $otpLength;
 
     protected int $maxAttempts;
+
     private string $format;
+
     private bool $throwExceptions;
 
     public function __construct()
