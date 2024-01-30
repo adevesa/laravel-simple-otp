@@ -2,6 +2,11 @@
 
 namespace adevesa\SimpleOTP;
 
+use adevesa\SimpleOTP\Exceptions\ExpiratedOtpException;
+use adevesa\SimpleOTP\Exceptions\InvalidCodeOtpException;
+use adevesa\SimpleOTP\Exceptions\MaxAttemptsValidationOtpException;
+use adevesa\SimpleOTP\Exceptions\NotFoundOtpException;
+
 class SimpleOTP
 {
     protected int $ttl;
@@ -18,6 +23,7 @@ class SimpleOTP
         $this->otpLength = (int) config('simple-otp.otp_length');
         $this->maxAttempts = (int) config('simple-otp.otp_max_attempts');
         $this->format = config('simple-otp.otp_format');
+        $this->throwExceptions = config('simple-otp.otp_throw_exceptions') === 'true';
     }
 
     protected function generateCode(): string
@@ -36,7 +42,7 @@ class SimpleOTP
     public function create(string $identifier): Models\SimpleOTP
     {
         $lastOtp = $this->getLastOtp($identifier);
-        if ($lastOtp) {
+        if ($lastOtp && $lastOtp->expires_at > now()) {
             return $lastOtp;
         }
 
@@ -62,6 +68,9 @@ class SimpleOTP
         $otpModel = $this->getLastOtp($identifier);
 
         if (! $otpModel) {
+            if($this->throwExceptions) {
+                throw new NotFoundOtpException();
+            }
             return false;
         }
 
@@ -69,14 +78,23 @@ class SimpleOTP
             $otpModel->attempts++;
             $otpModel->save();
 
+            if($this->throwExceptions) {
+                throw new InvalidCodeOtpException();
+            }
             return false;
         }
 
         if ($otpModel->attempts >= $this->maxAttempts) {
+            if($this->throwExceptions) {
+                throw new MaxAttemptsValidationOtpException();
+            }
             return false;
         }
 
         if ($otpModel->expires_at < now()) {
+            if($this->throwExceptions) {
+                throw new ExpiratedOtpException();
+            }
             return false;
         }
 
