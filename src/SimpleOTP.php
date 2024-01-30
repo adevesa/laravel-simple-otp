@@ -14,15 +14,15 @@ class SimpleOTP
     protected int $otpLength;
 
     protected int $maxAttempts;
-
-    protected bool $alphaNumeric;
+    private string $format;
+    private bool $throwExceptions;
 
     public function __construct()
     {
         $this->ttl = (int) config('simple-otp.otp_expiration_minutes');
         $this->otpLength = (int) config('simple-otp.otp_length');
         $this->maxAttempts = (int) config('simple-otp.otp_max_attempts');
-        $this->format = config('simple-otp.otp_format');
+        $this->format = (string) config('simple-otp.otp_format');
         $this->throwExceptions = config('simple-otp.otp_throw_exceptions') === 'true';
     }
 

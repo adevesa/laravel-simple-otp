@@ -4,6 +4,7 @@ namespace adevesa\SimpleOTP\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 class SimpleOTP extends Model
 {
@@ -18,6 +19,10 @@ class SimpleOTP extends Model
         'expires_at',
         'attempts',
     ];
+    private string $identity;
+    private string $code;
+    private int $attempts;
+    private Carbon $expires_at;
 
     public function init(string $identifier, string $code): self
     {
