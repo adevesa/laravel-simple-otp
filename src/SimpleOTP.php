@@ -68,9 +68,10 @@ class SimpleOTP
         $otpModel = $this->getLastOtp($identifier);
 
         if (! $otpModel) {
-            if($this->throwExceptions) {
+            if ($this->throwExceptions) {
                 throw new NotFoundOtpException();
             }
+
             return false;
         }
 
@@ -78,23 +79,26 @@ class SimpleOTP
             $otpModel->attempts++;
             $otpModel->save();
 
-            if($this->throwExceptions) {
+            if ($this->throwExceptions) {
                 throw new InvalidCodeOtpException();
             }
+
             return false;
         }
 
         if ($otpModel->attempts >= $this->maxAttempts) {
-            if($this->throwExceptions) {
+            if ($this->throwExceptions) {
                 throw new MaxAttemptsValidationOtpException();
             }
+
             return false;
         }
 
         if ($otpModel->expires_at < now()) {
-            if($this->throwExceptions) {
+            if ($this->throwExceptions) {
                 throw new ExpiratedOtpException();
             }
+
             return false;
         }
 
