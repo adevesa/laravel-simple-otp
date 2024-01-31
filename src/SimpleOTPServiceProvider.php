@@ -17,6 +17,6 @@ class SimpleOTPServiceProvider extends PackageServiceProvider
         $package
             ->name('laravel-simple-otp')
             ->hasConfigFile()
-            ->hasMigration('create_laravel-simple-otp_table');
+            ->hasMigration('create_simple_otp_table');
     }
 }
