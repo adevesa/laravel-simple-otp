@@ -4,7 +4,9 @@
     "keywords": [
         "adevesa",
         "laravel",
-        "laravel-simple-otp"
+        "laravel-simple-otp",
+        "otp",
+        "passwordless"
     ],
     "homepage": "https://github.com/adevesa/laravel-simple-otp",
     "license": "MIT",

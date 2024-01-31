@@ -15,17 +15,11 @@ You can install the package via composer:
 composer require adevesa/laravel-simple-otp
 ```
 
-You can publish and run the migrations with:
+You can publish and run the migrations and publish the config file with:
 
 ```bash
-php artisan vendor:publish --tag="laravel-simple-otp-migrations"
+php artisan vendor:publish --provider="adevesa\SimpleOTP\SimpleOTPServiceProvider"
 php artisan migrate
-```
-
-You can publish the config file with:
-
-```bash
-php artisan vendor:publish --tag="laravel-simple-otp-config"
 ```
 
 This is the contents of the published config file:
@@ -47,14 +41,14 @@ With the `otp_throw_exceptions` option you can control if the package should thr
 ```php
 $simpleOTP = new adevesa\SimpleOTP();
 $code = $simpleOTP->create('a_email@example.com');
-$simpleOTP->validate('a_email@example.com', "ASD123");
+$simpleOTP->verify('a_email@example.com', "ASD123");
 ```
 
 Or also
 
 ```php
-$code = \adevesa\SimpleOTP\Facades\SimpleOTP::create('+5491123456789');
-$isValid = \adevesa\SimpleOTP\Facades\SimpleOTP::validate('+5491123456789', $code);
+$code = \adevesa\SimpleOTP\Facades\SimpleOTP::create('+5491123456789')->code;
+$isValid = \adevesa\SimpleOTP\Facades\SimpleOTP::verify('+5491123456789', $code);
 ```
 
 ## Testing
