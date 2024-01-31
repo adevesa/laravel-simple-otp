@@ -6,6 +6,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
+/**
+ * @property string $identity
+ * @property string $code
+ * @property Carbon $validated_at
+ * @property Carbon $expires_at
+ * @property int $attempts
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
+ *
+ */
 class SimpleOTP extends Model
 {
     protected $table = 'simple_otps';
@@ -20,13 +30,10 @@ class SimpleOTP extends Model
         'attempts',
     ];
 
-    private string $identity;
-
-    private string $code;
-
-    private int $attempts;
-
-    private Carbon $expires_at;
+    protected $casts = [
+        'validated_at' => 'datetime',
+        'expires_at' => 'datetime',
+    ];
 
     public function init(string $identifier, string $code): self
     {

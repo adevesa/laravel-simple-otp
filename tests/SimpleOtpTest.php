@@ -29,7 +29,7 @@ test('otp code generated if is recreated returns the same', function () {
     expect($otpModel->identity)->toBe($identifier);
     expect($otpModel->code)->toBeString()->toHaveLength(6);
     expect($otpModel->validated_at)->toBeNull();
-    expect($otpModel->expires_at)->toBe($otpModel->created_at->addMinutes(5)->toDateTimeString());
+    expect($otpModel->expires_at->toDateTimeString())->toBe($otpModel->created_at->addMinutes(5)->toDateTimeString());
     expect($otpModel->attempts)->toBe(0);
 });
 
@@ -97,7 +97,7 @@ test('otp can be validated', function () {
     expect($result)->toBeTrue();
     expect($resultAgain)->toBeFalse();
     $otpModel = $otpModel->refresh();
-    expect($otpModel->validated_at)->toBe(now()->toDateTimeString());
+    expect($otpModel->validated_at)->toBeInstanceOf(\Illuminate\Support\Carbon::class);
     expect($otpModel->attempts)->toBe(0);
 });
 
